@@ -1,0 +1,10 @@
+<phpunit backupGlobals="false"
+         bootstrap="./src/autoload.php"
+         strict="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Twitter Simulator">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
