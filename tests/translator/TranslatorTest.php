@@ -24,15 +24,14 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($invalidCommand);
         $this->assertNotNull($postCommand);
         $this->assertInstanceOf("RobertFirek\\Processor\\Command", $postCommand);
+        $this->assertInstanceOf("RobertFirek\\Processor\\PostCommandProcessor", $postCommand->getProcessor());
         $this->assertInstanceOf("RobertFirek\\Processor\\Command", $readCommand);
+        $this->assertInstanceOf("RobertFirek\\Processor\\ReadCommandProcessor", $readCommand->getProcessor());
         $this->assertInstanceOf("RobertFirek\\Processor\\Command", $subscribeCommand);
+        $this->assertInstanceOf("RobertFirek\\Processor\\SubscribeCommandProcessor", $subscribeCommand->getProcessor());
         $this->assertInstanceOf("RobertFirek\\Processor\\Command", $wallCommand);
+        $this->assertInstanceOf("RobertFirek\\Processor\\WallCommandProcessor", $wallCommand->getProcessor());
 
-    }
-
-    public function testShouldNotTranslateUnknownCommandText()
-    {
-        $this->assertTrue(TRUE);
     }
 }
 

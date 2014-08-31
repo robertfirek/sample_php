@@ -1,11 +1,8 @@
 <?php
 namespace RobertFirek\Processor;
 
-class PostCommandProcessor implements CommandProcessor {
+class SubscribeCommandProcessor implements CommandProcessor {
 
-    public function process()
-    {
 
-    }
 }
 ?>

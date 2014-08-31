@@ -11,71 +11,79 @@ class CommandTranslationTest extends \PHPUnit_Framework_TestCase
         $definitions = CommandTranslation::all();
 
         $this->assertCount($expectedNumberOfDefinitions, $definitions);
-        $this->assertContains(CommandTranslation::POST, $definitions);
-        $this->assertContains(CommandTranslation::READ, $definitions);
-        $this->assertContains(CommandTranslation::SUBSCRIBE, $definitions);
-        $this->assertContains(CommandTranslation::WALL, $definitions);
     }
 
-    public function testOfPostCommandShouldMatchProperCommandText()
+    public function testOfPostCommandShouldMatchValidCommandText()
     {
-        $properPostCommand = "My_NAME -> My_POST text!@#$%^&*()";
+        $validPostCommand = "My_NAME -> My_POST text!@#$%^&*()";
         $postCommandWithoutName = " -> My_POST text!@#$%^&*()";
         $postCommandWithoutPost = "My_NAME -> ";
         $postCommandWithoutParameters = " -> ";
+        $postCommandTranslation = CommandTranslation::all()[0];
+        $postCommandRegexp = $postCommandTranslation->getCommandMatchingRegularExpression();
 
-        $properPostCommandMatch = preg_match(CommandTranslation::POST, $properPostCommand);
-        $postCommandWithoutNameMatch = preg_match(CommandTranslation::POST, $postCommandWithoutName);
-        $postCommandWithoutPostMatch = preg_match(CommandTranslation::POST, $postCommandWithoutPost);
-        $postCommandWithoutParametersMatch = preg_match(CommandTranslation::POST, $postCommandWithoutParameters);
+        $validPostCommandMatch = preg_match($postCommandRegexp, $validPostCommand);
+        $postCommandWithoutNameMatch = preg_match($postCommandRegexp, $postCommandWithoutName);
+        $postCommandWithoutPostMatch = preg_match($postCommandRegexp, $postCommandWithoutPost);
+        $postCommandWithoutParametersMatch = preg_match($postCommandRegexp, $postCommandWithoutParameters);
 
-        $this->assertEquals(1, $properPostCommandMatch);
+        $this->assertEquals("RobertFirek\\Processor\\PostCommandProcessor", $postCommandTranslation->getProcessClassName());
+        $this->assertEquals(1, $validPostCommandMatch);
         $this->assertEquals(0, $postCommandWithoutNameMatch);
         $this->assertEquals(0, $postCommandWithoutPostMatch);
         $this->assertEquals(0, $postCommandWithoutParametersMatch);
     }
 
-    public function testOfReadCommandShouldMatchProperCommandText()
+    public function testOfReadCommandShouldMatchValidCommandText()
     {
-        $properReadCommand = "My_NAME";
+        $validReadCommand = "My_NAME";
         $readCommandWithSpaces = " My_NAME ";
+        $readCommandTranslation = CommandTranslation::all()[1];
+        $readCommandRegexp = $readCommandTranslation->getCommandMatchingRegularExpression();
 
-        $properReadCommandMatch = preg_match(CommandTranslation::READ, $properReadCommand);
-        $readCommandWithSpacesMatch = preg_match(CommandTranslation::READ, $readCommandWithSpaces);
+        $validReadCommandMatch = preg_match($readCommandRegexp, $validReadCommand);
+        $readCommandWithSpacesMatch = preg_match($readCommandRegexp, $readCommandWithSpaces);
 
-        $this->assertEquals(1, $properReadCommandMatch);
+        $this->assertEquals("RobertFirek\\Processor\\ReadCommandProcessor", $readCommandTranslation->getProcessClassName());
+        $this->assertEquals(1, $validReadCommandMatch);
         $this->assertEquals(0, $readCommandWithSpacesMatch);
     }
 
 
-    public function testOfSubscribeCommandShouldMatchProperCommandText()
+    public function testOfSubscribeCommandShouldMatchValidCommandText()
     {
-        $properSubscribeCommand = "My_NAME follows subscribe_to_Name";
+        $validSubscribeCommand = "My_NAME follows subscribe_to_Name";
         $subscribeCommandWithoutName = " follows subscribe_to_Name";
         $subscribeCommandWithoutSubscribeTo = "My_NAME follows ";
         $subscribeCommandWithoutParameters = " follows ";
+        $subscribeCommandTranslation = CommandTranslation::all()[2];
+        $subscribeCommandRegexp = $subscribeCommandTranslation->getCommandMatchingRegularExpression();
 
-        $properSubscribeCommandMatch = preg_match(CommandTranslation::SUBSCRIBE, $properSubscribeCommand);
-        $subscribeCommandWithoutNameMatch = preg_match(CommandTranslation::SUBSCRIBE, $subscribeCommandWithoutName);
-        $subscribeCommandWithoutSubscribeToMatch = preg_match(CommandTranslation::SUBSCRIBE, $subscribeCommandWithoutSubscribeTo);
-        $subscribeCommandWithoutParametersMatch = preg_match(CommandTranslation::SUBSCRIBE, $subscribeCommandWithoutParameters);
+        $validSubscribeCommandMatch = preg_match($subscribeCommandRegexp, $validSubscribeCommand);
+        $subscribeCommandWithoutNameMatch = preg_match($subscribeCommandRegexp, $subscribeCommandWithoutName);
+        $subscribeCommandWithoutSubscribeToMatch = preg_match($subscribeCommandRegexp, $subscribeCommandWithoutSubscribeTo);
+        $subscribeCommandWithoutParametersMatch = preg_match($subscribeCommandRegexp, $subscribeCommandWithoutParameters);
 
-        $this->assertEquals(1, $properSubscribeCommandMatch);
+        $this->assertEquals("RobertFirek\\Processor\\SubscribeCommandProcessor", $subscribeCommandTranslation->getProcessClassName());
+        $this->assertEquals(1, $validSubscribeCommandMatch);
         $this->assertEquals(0, $subscribeCommandWithoutNameMatch);
         $this->assertEquals(0, $subscribeCommandWithoutSubscribeToMatch);
         $this->assertEquals(0, $subscribeCommandWithoutParametersMatch);
     }
 
 
-    public function testOfWallCommandShouldMatchProperCommandText()
+    public function testOfWallCommandShouldMatchValidCommandText()
     {
-        $properWallCommand = "My_NAME wall";
+        $validWallCommand = "My_NAME wall";
         $wallCommandWithoutName = " wall";
+        $wallCommandTranslation = CommandTranslation::all()[3];
+        $wallCommandRegexp = $wallCommandTranslation->getCommandMatchingRegularExpression();
 
-        $properWallCommandMatch = preg_match(CommandTranslation::WALL, $properWallCommand);
-        $wallCommandWithoutNameMatch = preg_match(CommandTranslation::WALL, $wallCommandWithoutName);
+        $validWallCommandMatch = preg_match($wallCommandRegexp, $validWallCommand);
+        $wallCommandWithoutNameMatch = preg_match($wallCommandRegexp, $wallCommandWithoutName);
 
-        $this->assertEquals(1, $properWallCommandMatch);
+        $this->assertEquals("RobertFirek\\Processor\\WallCommandProcessor", $wallCommandTranslation->getProcessClassName());
+        $this->assertEquals(1, $validWallCommandMatch);
         $this->assertEquals(0, $wallCommandWithoutNameMatch);
     }
 }

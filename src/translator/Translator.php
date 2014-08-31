@@ -6,15 +6,17 @@ class Translator
 {
     private $commandTranslations;
 
-    public function __construct(array $commandTranslations){
+    public function __construct(array $commandTranslations)
+    {
         $this->commandTranslations = $commandTranslations;
     }
 
     public function translateCommandText($commandText)
     {
         foreach ($this->commandTranslations as $commandTranslation) {
-            if (preg_match($commandTranslation,$commandText)) {
-                return new Command();
+            if (preg_match($commandTranslation->getCommandMatchingRegularExpression(), $commandText)) {
+                $processorClassName = $commandTranslation->getProcessClassName();
+                return new Command(new $processorClassName());
             }
         }
         return null;
