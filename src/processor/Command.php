@@ -3,18 +3,30 @@ namespace RobertFirek\Processor;
 
 class Command
 {
-    /**
-     * @var CommandProcessor
-     */
-    private $commandProcessor;
+    private $processorClass;
+    private $parameters;
 
-    public function __construct(CommandProcessor $commandProcessor)
+    public function __construct($processorClass, array $parameters)
     {
-        $this->commandProcessor = $commandProcessor;
+        $this->processorClass = $processorClass;
+        $this->parameters = $parameters;
     }
 
-    public function getProcessor() {
-        return $this->commandProcessor;
+    public function getProcessorClass()
+    {
+        return $this->processorClass;
+    }
+
+
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    public function execute(\RobertFirek\Wall\WallService $wallService)
+    {
+        $processor = new $this->processorClass($wallService);
+        return $processor->process($this->parameters);
     }
 }
 

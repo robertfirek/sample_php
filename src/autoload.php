@@ -13,7 +13,8 @@ spl_autoload_register(
                 'robertfirek\\processor\\postcommandprocessor' => '/processor/PostCommandProcessor.php',
                 'robertfirek\\processor\\readcommandprocessor' => '/processor/ReadCommandProcessor.php',
                 'robertfirek\\processor\\subscribecommandprocessor' => '/processor/SubscribeCommandProcessor.php',
-                'robertfirek\\processor\\wallcommandprocessor' => '/processor/WallCommandProcessor.php'
+                'robertfirek\\processor\\wallcommandprocessor' => '/processor/WallCommandProcessor.php',
+                'robertfirek\\wall\\wallservice' => '/wall/WallService.php'
             );
         }
         $cn = strtolower($class);

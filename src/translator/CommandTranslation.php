@@ -4,10 +4,10 @@ namespace RobertFirek\Translator;
 
 class CommandTranslation
 {
-    private static $POST_REGULAR_EXPR = "/^\\w+ -> .+$/m";
-    private static $READ_REGULAR_EXPR = "/^\\w+$/m";
-    private static $SUBSCRIBE_REGULAR_EXPR = "/\\w+ follows \\w+/m";
-    private static $WALL_REGULAR_EXPR = "/\\w+ wall/m";
+    private static $POST_REGULAR_EXPR = "/^(\\w+) -> (.+)$/m";
+    private static $READ_REGULAR_EXPR = "/^(\\w+)$/m";
+    private static $SUBSCRIBE_REGULAR_EXPR = "/(\\w+) follows (\\w+)/m";
+    private static $WALL_REGULAR_EXPR = "/(\\w+) wall/m";
 
     private $commandMatchingRegularExpression;
     private $processClassName;
